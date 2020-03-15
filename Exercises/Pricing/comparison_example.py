@@ -35,13 +35,34 @@ for e in range(n_experiments):
     ts_rewards_per_experiment.append(ts_learner.collected_rewards)
     gr_rewards_per_experiment.append(gr_learner.collected_rewards)
 
+# Regret = T*opt - sum_t(rewards_t)
 
 plt.figure(0)
 plt.xlabel("t")
 plt.ylabel("Regret")
-# Regret = T*opt - sum rewards
-plt.plot(np.cumsum(np.mean(opt-ts_rewards_per_experiment, axis=0)), 'r')
+
+
+# Calculate the instantaneous regret for each t for each experiment
+# Note: regret_t = optimal_arm_value - pulled_arm_value
+# Note: a positive regret is "bad", a negative regret is "good"
+regrets = opt - ts_rewards_per_experiment
+
+# Calculate the average regret for each iteration t
+# Note that we are conducting n_experiments so we need the average over all the experiments for each iteration t
+# Note that axis=0 means that you are averaging over each iteration t (over the column)
+avg_regrets = np.mean(regrets, axis=0)
+
+# Avg_Regret = T*opt - sum_t(value_t)
+# Note that we have already calculated the average regret (opt-value)
+# So we only need to cumulatively sum the array containing the avg_regret for each itearation t
+# np.cumsum(array) returns an array with item at position i equal to the sum of the items at previous positions (pos i included)
+avg_regret = np.cumsum(avg_regrets)
+# Plot
+plt.plot(avg_regret, 'r')
+
+# The same is done for Greedy_Learner
 plt.plot(np.cumsum(np.mean(opt-gr_rewards_per_experiment, axis=0)), 'g')
+
 plt.legend(["TS", "Greedy"])
 plt.show()
 
