@@ -1,4 +1,4 @@
-from Pricing.Learner import *
+from Learner import *
 
 
 class TS_Learner(Learner):
