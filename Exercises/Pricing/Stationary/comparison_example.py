@@ -1,8 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from Environment import *
-from TS_Learner import *
-from Greedy_Learner import *
+from Stationary.Environment import *
+from Stationary.TS_Learner import *
+from Stationary.Greedy_Learner import *
 
 n_arms = 4
 p = np.array([0.15, 0.1, 0.1,

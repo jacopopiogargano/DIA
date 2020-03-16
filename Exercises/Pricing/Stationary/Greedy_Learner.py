@@ -1,4 +1,4 @@
-from Learner import *
+from Stationary.Learner import *
 
 
 class Greedy_Learner(Learner):
